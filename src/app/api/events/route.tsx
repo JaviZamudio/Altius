@@ -2,7 +2,14 @@ import { events } from "@/configs/database";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
-    const eventsResult = await events.find().toArray()
+    // const eventsResult = await events.find().toArray()
+    // ordered by date, with the most recent event first
+    // const eventsResult = await events.find().sort({ date: -1 }).toArray()
+
+    // get events with a date greater than or equal to today
+    const nextEvents = await events.find({ date: { $gte: new Date() } }).sort({ date: 1 }).toArray()
+    const pastEvents = await events.find({ date: { $lt: new Date() } }).sort({ date: -1 }).toArray()
+    const eventsResult = { nextEvents, pastEvents }
     return NextResponse.json(eventsResult)
 }
 
