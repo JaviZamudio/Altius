@@ -5,7 +5,7 @@ import MyLink from "./MyLink";
 
 export default function Header() {
   return (
-    <header className='flex justify-between items-center h-16 p-4 bg-primary dark:bg-primary-dark'>
+    <header className='flex justify-between items-center h-16 p-4 bg-primary sticky top-0 z-10'>
       <Link href='/'>
         <Image src="/MTB Horizontal.svg" alt="Altius MTB" width={160} height={0} />
       </Link>

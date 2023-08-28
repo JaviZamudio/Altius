@@ -1,5 +1,21 @@
+"use client"
+
 import Header from '@/components/Header'
+import Link from 'next/link'
 import React from 'react'
+
+function MyInput({ label, type = 'text', placeholder, children }: any) {
+  return (
+    <label className='flex flex-col gap-2 w-full'>
+      <span>{label}</span>
+      {
+        children ?
+          children :
+          <input type={type} className='border border-gray-300 rounded p-2' placeholder={placeholder} />
+      }
+    </label>
+  )
+}
 
 export default function AddEventPage() {
   return (
@@ -7,63 +23,58 @@ export default function AddEventPage() {
       <Header />
 
       <main className='p-4'>
-        <h1 className='text-3xl'>
-          Crear Evento
-        </h1>
 
-        <form className='flex flex-col gap-4 mt-4'>
+        <form className='flex flex-col gap-4 mt-4 mx-auto max-w-xs'>
+          <h1 className='text-3xl'>
+            Crear Evento
+          </h1>
           {/* Title */}
-          <label className='flex flex-col gap-2'>
-            <span>Titulo</span>
-            <input type="text" className='border border-gray-300 dark:border-gray-700 rounded p-2' />
-          </label>
+          <MyInput label='Título' />
 
           {/* Strava Route Link */}
-          <label className='flex flex-col gap-2'>
-            <span>Link de la Ruta</span>
-            <input type="url" />
-          </label>
+          <MyInput label='Link de Strava' type='url' />
 
           {/* Difficulty */}
-          <label className='flex flex-col gap-2'>
-            <span>Dificultad</span>
-            <select>
+          <MyInput label='Dificultad'>
+            <select className='border border-gray-300 rounded p-2'>
               <option value="1">Fácil</option>
               <option value="2">Intermedio</option>
               <option value="3">Difícil</option>
               <option value="4">Extremo</option>
             </select>
-            <input type='range' min='1' max='4' step='1' />
-          </label>
+          </MyInput>
 
-          {/* Date */}
-          <label className='flex flex-col gap-2'>
-            <span>Fecha</span>
-            <input type="date" />
-          </label>
-
-          {/* Time */}
-          <label className='flex flex-col gap-2'>
-            <span>Hora</span>
-            <input type="time" />
-          </label>
+          {/* Date & Time */}
+          <div className='flex w-full justify-between gap-1'>
+            {/* Date */}
+            <MyInput label='Fecha' type='date' />
+            
+            {/* Takeoff time */}
+            <MyInput label='Hora de salida' type='time' />
+          </div>
 
           {/* Takeoff place */}
-          <label className='flex flex-col gap-2'>
-            <span>Lugar de salida</span>
-            <input type="text" />
-          </label>
+          <MyInput label='Lugar de salida' />
 
           {/* Description */}
           <label className='flex flex-col gap-2'>
             <span>Descripción</span>
-            <textarea />
+            <textarea className='border border-gray-300 rounded p-2' />
           </label>
 
-          {/* Submit */}
-          <button className='bg-secondary text-white rounded p-2'>
-            Crear Evento
-          </button>
+          {/* Buttons */}
+          <div className='flex gap-4'>
+            {/* <button className='rounded p-2 border border-gray-600 text-gray-600' type='button' tabIndex={-1}>
+              Cancelar
+            </button> */}
+            <Link href='/events' className='rounded p-2 border border-gray-600 text-gray-600' tabIndex={-1}>
+              Cancelar
+            </Link>
+
+            <button className='bg-secondary text-white rounded p-2' type='submit'>
+              Crear Evento
+            </button>
+          </div>
         </form>
       </main>
     </>
