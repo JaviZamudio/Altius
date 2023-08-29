@@ -8,7 +8,7 @@ function EventCard({ event }: { event: WithId<Event> }) {
     <div className='bg-white p-4 rounded shadow-md border border-gray-200 mb-4'>
       <h3 className='text-xl'>{event.title}</h3>
       <p className='text-sm text-gray-500'>
-        {event.date.toLocaleDateString()}
+        {event.date.toLocaleDateString("es-MX", { year: "numeric", month: "2-digit", day: "2-digit" })}
       </p>
 
       <div className='mt-2 flex flex-col gap-2'>
