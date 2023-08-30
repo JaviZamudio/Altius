@@ -46,7 +46,8 @@ export default function EventsPage() {
       "difficulty": "Dificil",
       "takeOffTime": "07:00",
       "meetingPoint": "Estacionamiento Meteoro Bike Park",
-      "finishTime": "10:30"
+      "finishTime": "10:30",
+      attendees: []
     },
   ];
   const pastEvents: WithId<Event>[] = [
@@ -59,7 +60,8 @@ export default function EventsPage() {
       "difficulty": "Dificil",
       "takeOffTime": "07:00",
       "meetingPoint": "Estacionamiento Meteoro Bike Park",
-      "finishTime": "10:30"
+      "finishTime": "10:30",
+      attendees: []
     },
     {
       "_id": new ObjectId("64ebf3d3fa41df0a0eba30de"),
@@ -70,7 +72,8 @@ export default function EventsPage() {
       "difficulty": "Facil",
       "takeOffTime": "06:30",
       "meetingPoint": "Laguna de Servín",
-      "finishTime": "08:30"
+      "finishTime": "08:30",
+      attendees: []
     }
   ]
 

@@ -7,4 +7,5 @@ export interface Event {
     takeOffTime: string;
     meetingPoint: string;
     finishTime: string;
+    attendees: string[];
 }
