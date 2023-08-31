@@ -1,3 +1,4 @@
+import { Event } from "@/types/types";
 import { configs } from "./configs";
 import { MongoClient } from "mongodb";
 
@@ -6,5 +7,5 @@ client.connect().then(() => console.log("Connected to MongoDB"));
 
 export const db = client.db("altius");
 
-export const events = db.collection("events");
+export const events = db.collection<Event>("events");
 

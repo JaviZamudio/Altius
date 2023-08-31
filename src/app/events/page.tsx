@@ -43,7 +43,7 @@ export default function EventsPage() {
       "title": "El Meteoro - Ixtla | Parte 2",
       "description": "56.9KM con ruta del Ultrasonic Maratón para reconocer Terreno. Estar 15 Minutos antes.",
       "date": new Date("2023-08-26"),
-      "stravaLink": "https://www.strava.com/routes/284928",
+      "stravaLink": "https://www.strava.com/routes/3130204255440782186",
       "difficulty": "Dificil",
       "takeOffTime": "07:00",
       "meetingPoint": "Estacionamiento Meteoro Bike Park",

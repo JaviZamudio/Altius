@@ -2,65 +2,179 @@
 
 import Header from '@/components/Header'
 import Link from 'next/link'
-import React from 'react'
-
-function MyInput({ label, type = 'text', placeholder, children }: any) {
-  return (
-    <label className='flex flex-col gap-2 w-full'>
-      <span>{label}</span>
-      {
-        children ?
-          children :
-          <input type={type} className='border border-gray-300 rounded p-2' placeholder={placeholder} />
-      }
-    </label>
-  )
-}
+import { useRouter } from 'next/navigation'
+import React, { useState } from 'react'
 
 export default function AddEventPage() {
+  const [form, setForm] = useState({
+    title: '',
+    stravaLink: '',
+    difficulty: '1',
+    date: '',
+    takeOffTime: '',
+    meetingPoint: '',
+    description: '',
+    finishTime: ''
+  })
+  const router = useRouter()
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    console.log(form)
+
+    const response = await fetch('/api/events', {
+      method: 'POST',
+      body: JSON.stringify(form),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    const resBody = await response.json()
+
+    console.log(resBody)
+
+    if (resBody.code === 'OK') {
+      alert('Evento creado')
+      router.push('/events')
+    } else {
+      alert('Error al crear evento')
+    }
+  }
+
   return (
     <>
       <Header />
 
       <main className='p-4'>
 
-        <form className='flex flex-col gap-4 mt-4 mx-auto max-w-xs'>
+        <form className='flex flex-col gap-4 mt-4 mx-auto max-w-xs' onSubmit={handleFormSubmit}>
           <h1 className='text-3xl'>
             Crear Evento
           </h1>
           {/* Title */}
-          <MyInput label='Título' />
+          <div className='flex flex-col gap-1 w-full'>
+            <span>Título</span>
+            <input
+              type='text'
+              className='border border-gray-300 rounded p-2'
+              placeholder='Título'
+              name='title'
+              onChange={handleFormChange}
+              autoComplete='off'
+              required
+              value={form.title}
+            />
+          </div>
 
           {/* Strava Route Link */}
-          <MyInput label='Link de Strava' type='url' />
+          {/* <MyInput label='Link de Strava' type='text' name='stravaLink' onChange={handleFormChange} required /> */}
+          <div className='flex flex-col gap-1 w-full'>
+            <span>Link de Strava</span>
+            <input
+              type='text'
+              className='border border-gray-300 rounded p-2'
+              placeholder='Link de Strava'
+              name='stravaLink'
+              onChange={handleFormChange}
+              autoComplete='off'
+              required
+              value={form.stravaLink}
+            />
+          </div>
 
           {/* Difficulty */}
-          <MyInput label='Dificultad'>
-            <select className='border border-gray-300 rounded p-2'>
+          <div className='flex flex-col gap-1 w-full'>
+            <span>Dificultad</span>
+            <select className='border border-gray-300 rounded p-2' name='difficulty' onChange={handleFormChange} required value={form.difficulty}>
               <option value="1">Fácil</option>
               <option value="2">Intermedio</option>
               <option value="3">Difícil</option>
               <option value="4">Extremo</option>
             </select>
-          </MyInput>
+          </div>
 
           {/* Date & Time */}
           <div className='flex w-full justify-between gap-1'>
-            {/* Date */}
-            <MyInput label='Fecha' type='date' />
-            
             {/* Takeoff time */}
-            <MyInput label='Hora de salida' type='time' />
+            <div className='flex flex-col gap-1 w-full'>
+              <span>Hora de salida</span>
+              <input
+                type='time'
+                className='border border-gray-300 rounded p-2'
+                placeholder='Hora de salida'
+                name='takeOffTime'
+                onChange={handleFormChange}
+                autoComplete='off'
+                required
+                value={form.takeOffTime}
+              />
+            </div>
+
+            {/* Finish time */}
+            <div className='flex flex-col gap-1 w-full'>
+              <span>Hora fin Aprox</span>
+              <input
+                type='time'
+                className='border border-gray-300 rounded p-2'
+                placeholder='Hora fin Aprox'
+                name='finishTime'
+                onChange={handleFormChange}
+                autoComplete='off'
+                required
+                value={form.finishTime}
+              />
+            </div>
+          </div>
+
+          {/* Date */}
+          <div className='flex flex-col gap-1 w-full'>
+            <span>Fecha</span>
+            <input
+              type='date'
+              className='border border-gray-300 rounded p-2'
+              placeholder='Fecha'
+              name='date'
+              onChange={handleFormChange}
+              autoComplete='off'
+              required
+              value={form.date}
+            />
           </div>
 
           {/* Takeoff place */}
-          <MyInput label='Lugar de salida' />
+          <div className='flex flex-col gap-1 w-full'>
+            <span>Lugar de salida</span>
+            <input
+              type='text'
+              className='border border-gray-300 rounded p-2'
+              placeholder='Lugar de salida'
+              name='meetingPoint'
+              onChange={handleFormChange}
+              autoComplete='off'
+              required
+              value={form.meetingPoint}
+            />
+          </div>
 
           {/* Description */}
-          <label className='flex flex-col gap-2'>
+          <div className='flex flex-col gap-1 w-full'>
             <span>Descripción</span>
-            <textarea className='border border-gray-300 rounded p-2' />
-          </label>
+            <textarea
+              className='border border-gray-300 rounded p-2'
+              name='description'
+              onChange={handleFormChange}
+              required
+              value={form.description}
+            />
+          </div>
 
           {/* Buttons */}
           <div className='flex gap-4'>
