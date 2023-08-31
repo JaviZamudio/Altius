@@ -36,6 +36,7 @@ function EventCard({ event }: { event: WithId<Event> }) {
 }
 
 export default function EventsPage() {
+
   const nextEvents: WithId<Event>[] = [
     {
       "_id": new ObjectId("64ec4581fa41df0a0eba30df"),
@@ -82,9 +83,18 @@ export default function EventsPage() {
       <Header />
 
       <main className='p-4 flex flex-col'>
-        <h1 className='text-3xl'>
-          Eventos
-        </h1>
+        <div className="flex justify-between items-center">
+          <h1 className='text-3xl'>
+            Eventos
+          </h1>
+          
+          <Link href='/events/add' className="bg-primary text-white p-2 flex rounded text-center justify-center gap-1 text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            Crear Evento
+          </Link>
+        </div>
 
         {/* Events List */}
         <div className='flex flex-col my-4'>

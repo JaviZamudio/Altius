@@ -54,14 +54,13 @@ export default function EventPage() {
   }
 
   useEffect(() => {
-    // <div className="strava-embed-placeholder" data-embed-type="route" data-embed-id="3127623879376346330" data-units="metric" data-full-width="true" />
+    <div className="strava-embed-placeholder" data-embed-type="route" data-embed-id="3127623879376346330" data-units="metric" data-full-width="true" />
     const embededDiv = document.createElement("div");
     embededDiv.className = "strava-embed-placeholder";
     embededDiv.setAttribute("data-embed-type", "route");
     embededDiv.setAttribute("data-embed-id", "3127623879376346330");
     embededDiv.setAttribute("data-units", "metric");
     embededDiv.setAttribute("data-full-width", "true");
-    // document.body.appendChild(embededDiv);
     document.getElementById("embededStravaMap")?.appendChild(embededDiv);
 
     const script = document.createElement("script");
@@ -88,7 +87,7 @@ export default function EventPage() {
         </p>
 
         {/* Event Map */}
-        <div className='overflow-hidden' id="embededStravaMap">
+        <div className='mt-4' id="embededStravaMap">
           {/* [Mapa]
           <br />
           [Stats] */}
@@ -136,7 +135,7 @@ export default function EventPage() {
           {event.date >= new Date() &&
             <div className='my-4'>
               <form className='flex gap-2 mt-1 justify-between' onSubmit={handleFormSubmit} autoComplete="off">
-                <input type="text" placeholder="Escribe tu nombre" className='border border-gray-200 p-1 px-2 rounded w-full' name="name" value={form.name} onChange={handleFormChange} autoComplete="off" />
+                <input type="text" placeholder="Escribe tu nombre" className='border border-gray-200 p-1 px-2 rounded w-full' name="name" value={form.name} onChange={handleFormChange} autoComplete="autocomplete_off_randString" />
 
                 <button className='bg-secondary text-white p-1 px-2 rounded' type="submit">
                   Apuntarme
