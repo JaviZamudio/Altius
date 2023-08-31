@@ -5,8 +5,8 @@ import { useEffect } from "react";
 
 export default function MakeAdminPage() {
     useEffect(() => {
-        // add admin = true to local storage
-        localStorage.setItem("admin", "true");
+        // add isAdmin = true to local storage
+        localStorage.setItem("isAdmin", "true");
     }, []);
 
     return (
