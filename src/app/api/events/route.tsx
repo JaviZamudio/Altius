@@ -7,8 +7,9 @@ export async function GET() {
     // get events with a date greater than or equal to today
     const nextEvents = await events.find({ date: { $gte: new Date() } }).sort({ date: 1 }).toArray()
     const pastEvents = await events.find({ date: { $lt: new Date() } }).sort({ date: -1 }).toArray()
+
     const eventsResult = { nextEvents, pastEvents }
-    return NextResponse.json(eventsResult)
+    return NextResponse.json({ message: 'Events found', data: eventsResult, code: "OK" })
 }
 
 export async function POST(request: NextRequest) {
