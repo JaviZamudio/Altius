@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Altius MTB',
-  description: 'Altius MTB es un club de ciclismo de montaña en Querétaro, México.',
+  description: 'Altius es un grupo de triatletas y ciclistas de montaña que se reúnen para entrenar y competir en eventos de MTB y triatlón.',
   icons: {
     icon: '/Mini.svg',
   },

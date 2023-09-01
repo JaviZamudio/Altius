@@ -11,8 +11,8 @@ export default function Header() {
       </Link>
 
       <nav className='flex items-center gap-4'>
-        <MyLink href='/' text='Home' />
-        <MyLink href='/events' text='Events' />
+        <MyLink href='/' text='Inicio' />
+        <MyLink href='/events' text='Eventos' />
       </nav>
     </header>
   )
