@@ -6,8 +6,6 @@ import { NextRequest, NextResponse } from "next/server"
 export async function GET(request: NextRequest, {params}: {params: {_id: string}}) {
     // get the event id from the request params
     const _id = new ObjectId(params._id)
-    console.log(_id)
-    console.log(params)
 
     // find the event by id
     const event = await events.findOne({ _id })
@@ -35,7 +33,7 @@ export async function POST(request: NextRequest, {params}: {params: {_id: string
 }
 
 // Remove an attendee from an event
-export async function DELETE(request: NextRequest, {params}: {params: {_id: string}}) {
+export async function PUT(request: NextRequest, {params}: {params: {_id: string}}) {
     // get the event id from the request params
     const _id = new ObjectId(params._id)
 
@@ -50,4 +48,35 @@ export async function DELETE(request: NextRequest, {params}: {params: {_id: stri
     })
 
     return NextResponse.json({ message: 'Attendee removed', data: result, code: "OK" })
+}
+
+// delete an event
+export async function DELETE(request: NextRequest, {params}: {params: {_id: string}}) {
+    // get the event id from the request params
+    const _id = new ObjectId(params._id)
+
+    // delete the event
+    const result = await events.deleteOne({ _id })
+
+    return NextResponse.json({ message: 'Event deleted', data: result, code: "OK" })
+}
+
+export async function PATCH(request: NextRequest, {params}: {params: {_id: string}}) {
+    // get the event id from the request params
+    const _id = new ObjectId(params._id)
+
+    // get the event data from the request body
+    const { name, description, date, stravaLink } = await request.json()
+
+    // update the event
+    const result = await events.updateOne({ _id }, {
+        $set: {
+            name,
+            description,
+            date,
+            stravaLink
+        }
+    })
+
+    return NextResponse.json({ message: 'Event updated', data: result, code: "OK" })
 }

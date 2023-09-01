@@ -22,7 +22,7 @@ export default function EventPage({ params }: { params: { _id: string } }) {
 
   const updateAttendees = async () => {
     const res = await fetch(`/api/events/${params._id}`, {
-      method: "POST",
+      method: "PUT",
       body: JSON.stringify({
         name: form.name
       }),
@@ -101,6 +101,15 @@ export default function EventPage({ params }: { params: { _id: string } }) {
     return;
   }
 
+  const handleCopyLink = () => {
+    if (window.isSecureContext) {
+      navigator.clipboard.writeText(window.location.href);
+      alert("Link copiado");
+    } else {
+      alert("No se puede copiar el link");
+    }
+  }
+
   useEffect(() => {
     getEvent();
 
@@ -119,7 +128,6 @@ export default function EventPage({ params }: { params: { _id: string } }) {
 
     const script = document.createElement("script");
     script.src = "https://strava-embeds.com/embed.js";
-    script.async = true;
     document.body.appendChild(script);
 
     return () => {
@@ -136,23 +144,20 @@ export default function EventPage({ params }: { params: { _id: string } }) {
           {event.title}
         </h1>
 
-        <p className='text-gray-500'>
+        <p className='text-gray-500 mt-1'>
           {event.date?.toLocaleDateString("es-MX", { year: "numeric", month: "2-digit", day: "2-digit" })}
         </p>
 
+
+
+
         {/* Event Map */}
-        <div className='mt-4' id="embededStravaMap">
-          {/* [Mapa]
-          <br />
-          [Stats] */}
-        </div>
+        <div className='mt-4' id="embededStravaMap" />
 
         {/* Event Details */}
         <div className='mt-4 flex flex-col gap-2'>
-          <p>
-            <span className='font-bold'>Hora de salida: </span>
-            {event.takeOffTime}
-          </p>
+
+
           <div className='flex gap-2 items-center'>
             <span className='font-bold'>Dificultad: </span>
             {/* 1 rombo for each difficulty */}
@@ -162,10 +167,25 @@ export default function EventPage({ params }: { params: { _id: string } }) {
               ))}
             </div>
           </div>
-          <p>
+
+          <p className='overflow-auto'>
             <span className='font-bold'>Lugar de reunión: </span>
-            {event.meetingPoint}
+            {
+              // if it contains an http link, make it clickable
+              event.meetingPoint?.includes("http") ?
+                <a href={event.meetingPoint} target="_blank" rel="noreferrer" className='text-blue-500 underline'>
+                  {event.meetingPoint}
+                </a>
+                :
+                event.meetingPoint
+            }
           </p>
+
+          <p>
+            <span className='font-bold'>Hora de inicio: </span>
+            {event.takeOffTime}
+          </p>
+
           <p>
             <span className='font-bold'>Hora fin aprox: </span>
             {event.finishTime}
@@ -179,10 +199,19 @@ export default function EventPage({ params }: { params: { _id: string } }) {
         {/* Event Assistant List */}
         <div className='mt-8'>
           <div className='flex justify-between items-center'>
-            <h2 className='text-lg font-bold'>Lista de Asistentes</h2>
-            {/* <button className='bg-secondary text-white p-1 rounded px-2'>
-              Apuntarme
-            </button> */}
+            <h2 className='text-lg font-bold'>Lista de Confirmación</h2>
+
+            {/* Share Button */}
+            {
+              isAdmin &&
+              < button className='border-2 border-tertiary text-tertiary py-1 px-2 rounded font-semibold text-sm flex gap-1 items-center' onClick={handleCopyLink}>
+                Copy intive
+
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                </svg>
+              </button>
+            }
           </div>
 
           {/* Assist form */}
@@ -198,7 +227,8 @@ export default function EventPage({ params }: { params: { _id: string } }) {
             </div>
           }
 
-          <div className='flex flex-col gap-2 mt-4'>
+          {/* Attendees list */}
+          <div className='flex flex-col gap-2 my-4'>
             {event.attendees?.map((assistant: string, index: number) => (
               <div key={index} className="flex justify-between items-center bg-neutral-100 p-2 rounded shadow-sm px-6">
                 <p>{assistant}</p>
@@ -211,22 +241,19 @@ export default function EventPage({ params }: { params: { _id: string } }) {
               </div>
             ))}
           </div>
-
-          {/* Assist form */}
-          {/* {event.date >= new Date() &&
-            <div className='mt-6 mb-4'>
-              <h3 className='font-semibold'>Apuntarme</h3> 
-              <form className='flex gap-2 mt-1 justify-between'>
-                <input type="text" placeholder="Escribe tu nombre" className='border border-gray-200 p-2 rounded w-full' />
-
-                <button className='bg-secondary text-white p-2 rounded'>
-                  Apuntarme
-                </button>
-              </form>
-            </div>
-          } */}
         </div>
-      </main>
+
+        {/* Edit Event Button */}
+        {isAdmin &&
+          <Link href={`/events/${params._id}/edit`} className="bg-tertiary text-white p-2 rounded flex justify-center text-center mt-6 gap-2">
+            Editar evento
+
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+            </svg>
+          </Link>
+        }
+      </main >
     </>
   )
 }
