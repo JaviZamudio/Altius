@@ -37,8 +37,6 @@ export default function EventPage({ params }: { params: { _id: string } }) {
       alert("Error al registrar asistencia");
       return;
     }
-
-    alert("Asistencia registrada");
   }
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -93,8 +91,6 @@ export default function EventPage({ params }: { params: { _id: string } }) {
       return;
     }
 
-    alert("Asistencia eliminada");
-
     setEvent({
       ...event,
       attendees: event.attendees.filter((attendee: string) => attendee !== name)
@@ -103,13 +99,9 @@ export default function EventPage({ params }: { params: { _id: string } }) {
     return;
   }
 
-  const handleCopyLink = () => {
-    if (window.isSecureContext) {
-      navigator.clipboard.writeText(window.location.href);
-      alert("Link copiado");
-    } else {
-      alert("No se puede copiar el link");
-    }
+  const handleCopyLink = async () => {
+    await navigator.clipboard.writeText(window.location.href);
+    alert(`Link copiado a ${window.location.href}`);
   }
 
   useEffect(() => {
@@ -222,7 +214,7 @@ export default function EventPage({ params }: { params: { _id: string } }) {
           {event.date >= new Date() &&
             <div className='my-4'>
               <form className='flex gap-2 mt-1 justify-between' onSubmit={handleFormSubmit} autoComplete="off">
-                <input type="text" placeholder="Escribe tu nombre" className='border border-gray-200 p-2 rounded w-full' name="name" value={form.name} onChange={handleFormChange} autoComplete="autocomplete_off_randString" required/>
+                <input type="text" placeholder="Escribe tu nombre" className='border border-gray-200 p-2 rounded w-full' name="name" value={form.name} onChange={handleFormChange} autoComplete="autocomplete_off_randString" required />
 
                 <button className='bg-secondary text-white p-2 rounded' type="submit">
                   Apuntarme
