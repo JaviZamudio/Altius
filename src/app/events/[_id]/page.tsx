@@ -22,7 +22,7 @@ export default function EventPage({ params }: { params: { _id: string } }) {
 
   const updateAttendees = async () => {
     const res = await fetch(`/api/events/${params._id}`, {
-      method: "PUT",
+      method: "POST",
       body: JSON.stringify({
         name: form.name
       }),
@@ -222,7 +222,7 @@ export default function EventPage({ params }: { params: { _id: string } }) {
           {event.date >= new Date() &&
             <div className='my-4'>
               <form className='flex gap-2 mt-1 justify-between' onSubmit={handleFormSubmit} autoComplete="off">
-                <input type="text" placeholder="Escribe tu nombre" className='border border-gray-200 p-2 rounded w-full' name="name" value={form.name} onChange={handleFormChange} autoComplete="autocomplete_off_randString" />
+                <input type="text" placeholder="Escribe tu nombre" className='border border-gray-200 p-2 rounded w-full' name="name" value={form.name} onChange={handleFormChange} autoComplete="autocomplete_off_randString" required/>
 
                 <button className='bg-secondary text-white p-2 rounded' type="submit">
                   Apuntarme

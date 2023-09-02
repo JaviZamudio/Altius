@@ -19,7 +19,7 @@ export default function EditEventPage({ params }: { params: { _id: string } }) {
   })
 
   const updateEvent = async () => {
-    const response = await fetch(`/api/events/${params._id}`, {
+    const response = await fetch(`/api/events/${params._id}/edit`, {
       method: 'PATCH',
       body: JSON.stringify(form),
       headers: {
@@ -40,7 +40,7 @@ export default function EditEventPage({ params }: { params: { _id: string } }) {
   }
 
   const deleteEvent = async () => {
-    const response = await fetch(`/api/events/${params._id}`, {
+    const response = await fetch(`/api/events/${params._id}/edit`, {
       method: 'DELETE',
     })
 
