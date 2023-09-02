@@ -19,9 +19,25 @@ export default function EditEventPage({ params }: { params: { _id: string } }) {
   })
 
   const updateEvent = async () => {
+    const reqBody = {
+      ...form,
+    }
+
+    // add timezone offset to date to get the correct date
+    const date = new Date(form.date)
+    const offset = date.getTimezoneOffset()
+    date.setMinutes(date.getMinutes() + offset)
+
+    // also add timezone offset to takeoff time "HH:MM"
+    const [hours, minutes] = form.takeOffTime.split(':')
+    date.setHours(date.getHours() + parseInt(hours))
+    date.setMinutes(date.getMinutes() + parseInt(minutes))
+
+    reqBody.date = date.toISOString()
+
     const response = await fetch(`/api/events/${params._id}/edit`, {
       method: 'PATCH',
-      body: JSON.stringify(form),
+      body: JSON.stringify(reqBody),
       headers: {
         'Content-Type': 'application/json'
       }

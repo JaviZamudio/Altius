@@ -3,6 +3,7 @@
 import Header from "@/components/Header";
 import { Event } from "@/types/types";
 import { ObjectId, WithId } from "mongodb";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -11,7 +12,9 @@ function EventCard({ event }: { event: any }) {
     <div className='bg-white p-4 rounded shadow-md border border-gray-200'>
       <h3 className='text-xl'>{event.title}</h3>
       <p className='text-sm text-gray-500'>
-        {event.date}
+        {
+          new Date(event.date).toLocaleDateString()
+        }
       </p>
 
       <div className='mt-2 flex flex-col gap-2'>
@@ -19,10 +22,15 @@ function EventCard({ event }: { event: any }) {
           <span className='font-bold'>Hora de salida: </span>
           {event.takeOffTime}
         </p>
-        <p>
-          <span className='font-bold'>Dificultad: </span>
-          {event.difficulty}
-        </p>
+        <div className='flex gap-2 items-center'>
+            <span className='font-bold'>Dificultad: </span>
+            {/* 1 rombo for each difficulty */}
+            <div className='flex'>
+              {[...Array(parseInt(event.difficulty) || 0)].map((_, index) => (
+                <Image key={index} src="/DiffRomboid.svg" alt="Dificultad" width={25} height={20} />
+              ))}
+            </div>
+          </div>
         <p className="text-sm mt-2">
           {/* only the first 80 chars */}
           {event.description.length > 80 ? event.description.slice(0, 80) + '...' : event.description}
@@ -48,16 +56,6 @@ export default function EventsPage() {
   const getEvents = async () => {
     const res = await fetch('/api/events')
     const resBody = await res.json()
-
-    resBody.data.nextEvents = resBody.data.nextEvents.map((event: any) => {
-      event.date = new Date(event.date).toLocaleDateString();
-      return event
-    })
-
-    resBody.data.pastEvents = resBody.data.pastEvents.map((event: any) => {
-      event.date = new Date(event.date).toLocaleDateString();
-      return event
-    })
 
     if (resBody.code === 'OK') {
       setNextEvents(resBody.data.nextEvents)
