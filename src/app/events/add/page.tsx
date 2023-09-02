@@ -173,6 +173,7 @@ export default function AddEventPage() {
               onChange={handleFormChange}
               required
               value={form.description}
+              rows={3}
             />
           </div>
 

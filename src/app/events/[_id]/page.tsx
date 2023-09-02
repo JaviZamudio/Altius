@@ -67,7 +67,9 @@ export default function EventPage({ params }: { params: { _id: string } }) {
       return;
     }
 
+    console.log(body.data.date);
     body.data.date = new Date(body.data.date);
+    console.log(typeof body.data.date);
     body.data.stravaRouteId = body.data.stravaLink.split("/").pop();
 
     setEvent(body.data);
@@ -145,10 +147,8 @@ export default function EventPage({ params }: { params: { _id: string } }) {
         </h1>
 
         <p className='text-gray-500 mt-1'>
-          {event.date?.toLocaleDateString("es-MX", { year: "numeric", month: "2-digit", day: "2-digit" })}
+          {event.date?.toLocaleDateString()}
         </p>
-
-
 
 
         {/* Event Map */}
@@ -173,8 +173,11 @@ export default function EventPage({ params }: { params: { _id: string } }) {
             {
               // if it contains an http link, make it clickable
               event.meetingPoint?.includes("http") ?
-                <a href={event.meetingPoint} target="_blank" rel="noreferrer" className='text-blue-500 underline'>
-                  {event.meetingPoint}
+                <a href={event.meetingPoint} target="_blank" rel="noreferrer" className='text-blue-500 underline gap-1 items-center ml-1'>
+                  Ver Mapa
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 inline ml-1">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                  </svg>
                 </a>
                 :
                 event.meetingPoint
@@ -190,6 +193,7 @@ export default function EventPage({ params }: { params: { _id: string } }) {
             <span className='font-bold'>Hora fin aprox: </span>
             {event.finishTime}
           </p>
+
           <p className="text-sm mt-1 bg-neutral-100 p-4 rounded shadow-md flex flex-col gap-1">
             <span className='font-semibold'>Descripción: </span>
             {event.description}

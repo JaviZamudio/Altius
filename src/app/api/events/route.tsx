@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (hasIncompleteFields(newEvent))
-        return NextResponse.json({ error: 'Incomplete fields' }, { status: 400 })
+        return NextResponse.json({ message: 'Incomplete fields', code: "INCOMPLETE_FIELDS" })
 
     const result = await events.insertOne(newEvent)
 
