@@ -75,7 +75,7 @@ export default function EventsPage() {
     <>
       <Header />
 
-      <main className='p-4 flex flex-col max-w-xl mx-auto'>
+      <main className='p-4 flex flex-col max-w-4xl mx-auto'>
         <div className="flex justify-between items-center">
           <h1 className='text-3xl'>
             Eventos
