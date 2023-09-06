@@ -45,8 +45,6 @@ export default function EditEventPage({ params }: { params: { _id: string } }) {
 
     const resBody = await response.json()
 
-    console.log(resBody)
-
     if (resBody.code === 'OK') {
       alert('Evento actualizado')
       router.push(`/events/${params._id}`)
@@ -61,8 +59,6 @@ export default function EditEventPage({ params }: { params: { _id: string } }) {
     })
 
     const resBody = await response.json()
-
-    console.log(resBody)
 
     if (resBody.code === 'OK') {
       alert('Evento eliminado')
@@ -97,8 +93,6 @@ export default function EditEventPage({ params }: { params: { _id: string } }) {
 
     const event = resBody.data
 
-    console.log(event)
-
     setForm({
       title: event.title,
       stravaLink: event.stravaLink,
@@ -115,7 +109,7 @@ export default function EditEventPage({ params }: { params: { _id: string } }) {
   useEffect(() => {
     getEvent()
 
-    if(localStorage.getItem("isAdmin") !== "true") {
+    if (localStorage.getItem("isAdmin") !== "true") {
       router.push(`/events/${params._id}`)
     }
   }, []);
@@ -126,11 +120,11 @@ export default function EditEventPage({ params }: { params: { _id: string } }) {
 
       <main className="p-4">
 
-        <h1 className="text-3xl">
-          Editar Evento
-        </h1>
 
         <form onSubmit={handleFormSubmit} className="flex flex-col gap-4 mt-4 mx-auto max-w-xs">
+          <h1 className="text-3xl">
+            Editar Evento
+          </h1>
           <label className="flex flex-col gap-1">
             <span className="">Título</span>
             <input
@@ -261,13 +255,15 @@ export default function EditEventPage({ params }: { params: { _id: string } }) {
               Guardar
             </button>
           </div>
+
+          <hr className="my-[]" />
+
+          <button className='bg-red-500 text-white rounded p-2 w-full' onClick={deleteEvent}>
+            Eliminar Evento
+          </button>
         </form>
 
-        <hr className="my-4" />
 
-        <button className='bg-red-500 text-white rounded p-2 w-full' onClick={deleteEvent}>
-          Eliminar Evento
-        </button>
       </main>
     </>
   );

@@ -36,7 +36,6 @@ export async function PATCH(request: NextRequest, {params}: {params: {_id: strin
         finishTime: reqBody.finishTime,
         meetingPoint: reqBody.meetingPoint,
         description: reqBody.description,
-        attendees: event.attendees,
     }
 
     if(hasIncompleteFields(newData)) {

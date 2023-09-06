@@ -65,9 +65,7 @@ export default function EventPage({ params }: { params: { _id: string } }) {
       return;
     }
 
-    console.log(body.data.date);
     body.data.date = new Date(body.data.date);
-    console.log(typeof body.data.date);
     body.data.stravaRouteId = body.data.stravaLink.split("/").pop();
 
     setEvent(body.data);
@@ -133,7 +131,7 @@ export default function EventPage({ params }: { params: { _id: string } }) {
     <>
       <Header />
 
-      <main className='p-4'>
+      <main className='p-4 max-w-lg mx-auto'>
         <h1 className='text-3xl'>
           {event.title}
         </h1>
@@ -148,8 +146,6 @@ export default function EventPage({ params }: { params: { _id: string } }) {
 
         {/* Event Details */}
         <div className='mt-4 flex flex-col gap-2'>
-
-
           <div className='flex gap-2 items-center'>
             <span className='font-bold'>Dificultad: </span>
             {/* 1 rombo for each difficulty */}
@@ -161,7 +157,7 @@ export default function EventPage({ params }: { params: { _id: string } }) {
           </div>
 
           <p className='overflow-auto'>
-            <span className='font-bold'>Lugar de reunión: </span>
+            <span className='font-bold'>Punto de encuentro: </span>
             {
               // if it contains an http link, make it clickable
               event.meetingPoint?.includes("http") ?

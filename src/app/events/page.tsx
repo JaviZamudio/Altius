@@ -23,14 +23,14 @@ function EventCard({ event }: { event: any }) {
           {event.takeOffTime}
         </p>
         <div className='flex gap-2 items-center'>
-            <span className='font-bold'>Dificultad: </span>
-            {/* 1 rombo for each difficulty */}
-            <div className='flex'>
-              {[...Array(parseInt(event.difficulty) || 0)].map((_, index) => (
-                <Image key={index} src="/DiffRomboid.svg" alt="Dificultad" width={25} height={20} />
-              ))}
-            </div>
+          <span className='font-bold'>Dificultad: </span>
+          {/* 1 rombo for each difficulty */}
+          <div className='flex'>
+            {[...Array(parseInt(event.difficulty) || 0)].map((_, index) => (
+              <Image key={index} src="/DiffRomboid.svg" alt="Dificultad" width={25} height={20} />
+            ))}
           </div>
+        </div>
         <p className="text-sm mt-2">
           {/* only the first 80 chars */}
           {event.description.length > 80 ? event.description.slice(0, 80) + '...' : event.description}
@@ -75,7 +75,7 @@ export default function EventsPage() {
     <>
       <Header />
 
-      <main className='p-4 flex flex-col'>
+      <main className='p-4 flex flex-col max-w-lg mx-auto'>
         <div className="flex justify-between items-center">
           <h1 className='text-3xl'>
             Eventos
@@ -93,11 +93,11 @@ export default function EventsPage() {
 
         {/* Events List */}
         <div className='flex flex-col my-4 gap-4'>
-          <h2 className='text-lg'>Próximos Eventos</h2>
+          {nextEvents.length > 0 && <h2 className='text-lg'>Próximos Eventos</h2>}
           {nextEvents.map((event, index) => (
             <EventCard event={event} key={index} />
           ))}
-
+          
           <h2 className='text-lg gap-4'>Eventos Anteriores</h2>
           {pastEvents.map((event, index) => (
             <EventCard event={event} key={index} />
