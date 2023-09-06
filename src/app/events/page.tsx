@@ -32,8 +32,8 @@ function EventCard({ event }: { event: any }) {
           </div>
         </div>
         <p className="text-sm mt-2">
-          {/* only the first 80 chars */}
-          {event.description.length > 80 ? event.description.slice(0, 80) + '...' : event.description}
+          {/* only the first 144 chars */}
+          {event.description.length > 144 ? event.description.slice(0, 144) + '...' : event.description}
         </p>
 
         {/* Event Actions */}
@@ -75,7 +75,7 @@ export default function EventsPage() {
     <>
       <Header />
 
-      <main className='p-4 flex flex-col max-w-4xl mx-auto'>
+      <main className='p-4 flex flex-col max-w-2xl mx-auto'>
         <div className="flex justify-between items-center">
           <h1 className='text-3xl'>
             Eventos
@@ -93,7 +93,12 @@ export default function EventsPage() {
 
         {/* Events List */}
         <div className='flex flex-col my-4 gap-4'>
-          {nextEvents.length > 0 && <h2 className='text-lg'>Próximos Eventos</h2>}
+          <h2 className='text-lg'>Próximos Eventos</h2>
+          {nextEvents.length === 0 &&
+            <p className="text-sm text-gray-500 w-full ml-16 my-4">
+              No hay eventos próximos
+            </p>
+          }
           {nextEvents.map((event, index) => (
             <EventCard event={event} key={index} />
           ))}
