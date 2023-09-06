@@ -131,7 +131,7 @@ export default function EventPage({ params }: { params: { _id: string } }) {
     <>
       <Header />
 
-      <main className='p-4 max-w-lg mx-auto'>
+      <main className='p-4 max-w-xl mx-auto'>
         <h1 className='text-3xl'>
           {event.title}
         </h1>
